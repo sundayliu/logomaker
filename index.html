@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Online logo editor in HTML 5 Canvas - By Scriptol.com</title>
+
+<link type="text/css" rel="stylesheet" href="code/slider.css" />
+<link type="text/css" rel="stylesheet" href="code/farbtastic.css" />
+<link type="text/css" rel="stylesheet" href="code/logomaker.css" />
+
+<script type="text/javascript" src="code/slider.js"></script>
+<script type="text/javascript" src="code/jquery.js"></script>
+<script type="text/javascript" src="code/farbtastic.js"></script>
+<script type="text/javascript" src="code/logomaker.js"></script>
+
+<style type="text/css" media="screen">
+.colorwell 
+{
+   border: 2px solid #fff;
+   width: 6em;
+   text-align: center;
+   cursor: pointer;
+}
+body .colorwell-selected 
+{
+   border: 2px solid #000;
+   font-weight: bold;
+}
+form-item
+{
+	margin:4px;
+}
+a { text-decoration:none;color:black;}
+</style>
+
+</head>
+<!--
+   Canvas Logo Maker by Scriptol.com/Scriptol.fr. (c) 2012 Denis Sureau
+   Mozilla Public License. Compatible GPL. All derivative work must remain under MPL.
+   http://www.mozilla.org/MPL/1.1/
+-->
+<body>
+<div id="content">
+<div id="mainboard"  class="shade">
+<div id="titleband">
+<a href="http://www.scriptol.com/html5/canvas/logo-maker.php" target="_blank"><img src="images/help.png" width="28" height="28" border="0" style="float:right;margin:4px;"></a>
+<h1><a href="http://www.scriptol.com/html5/canvas/" target="_top">Canvas Logo Maker</a></h1>
+</div>
+<div id="panel">
+
+<!-- largeur-->
+<div class="carpe_horizontal_slider_track" style="width:210px;margin-bottom:2px;">
+    <div class="carpe_slider_slit" style="width:200px">&nbsp;</div>
+    <div class="carpe_slider"
+        id="canvasws"
+        orientation="horizontal"
+        distance="190"
+        display="canvasw"
+        style="left:150px;">
+	</div>
+</div>
+<div class="carpe_slider_display_holder" >
+    <input class="carpe_slider_number"
+        id="canvasw" name="canvasw" type="text" typelock="off"
+        from="0" to="800" valuecount="101" value="600" 
+    />
+</div>
+<span style="float:left;"> </span>
+<!-- hauteur-->
+<div class="carpe_horizontal_slider_track" style="width:212px">
+    <div class="carpe_slider_slit" style="width:200px">&nbsp;</div>
+    <div class="carpe_slider"
+        id="canvashs"
+        orientation="horizontal"
+        distance="190"
+        display="canvash"
+        style="left:50px;">
+	</div>
+</div>
+<div class="carpe_slider_display_holder" >
+    <input class="carpe_slider_number"
+        id="canvash" name="canvash" type="text" typelock="off"
+        from="0" to="600" valuecount="101" value="150" 
+    />
+</div>
+
+<div style="clear:both"></div>
+<canvas id="canvaslogo" style="background-image:url(code/transparence.png);float:left;border:1px solid #000" width="700" height="160">
+</canvas>
+
+
+
+<br style="clear:both">
+	
+  <table width="100%" border="0" cellspacing="4">
+    <tr>
+      <td width="384">
+	  <p>
+	  <textarea name="logotext" cols="24" rows="1" id="logotext"  onkeyup="update()">Demonstration</textarea>
+	  </p>	  </td>
+      <td width="320"  rowspan="5">
+	  
+<div id="required" style="color:red;font-size:110%">jQuery.js must be installed.</div>
+<form id="colorpick"  action="" style="width: 320px;">
+<div id="picker" style="float: right;"  onclick="anycol()" onMouseDown="anycol()"></div>
+<br>
+  <div class="form-item">
+      <label for="textcolor">Text</label>
+	  <input type="text" id="textcolor" name="textcolor" class="colorwell" value="000000" size="7" maxlength="7" onClick="setcol()"  />
+  </div>
+  <div class="form-item">
+       <label for="bordercolor">Bord</label>
+	   <input type="text" id="bordcolor" name="bordcolor" class="colorwell" value="CCCCCC" size="7" maxlength="7" onClick="setbcol()" />
+  </div>
+  <div class="form-item">
+        <label for="backcolor">Back</label>
+		<input type="text" id="backcolor" name="backcolor" class="colorwell" value="FFFFFF" size="7" maxlength="7" onClick="setgcol()" />
+  </div>
+  
+  Transparent background<input type="checkbox" id="transparencid" onClick="transfun(this)">
+</form></td>
+</tr>
+
+<tr>
+ <td>
+
+<p>Text offset 
+  <input type="submit" name="Submit" value="Center" onClick="centrage();update()">
+</p>
+<!-- x -->	
+<span  style="float:left">x&nbsp;</span> 
+<input class="numinput"  id="textx" name="textx" type="text" value="140"  />
+<input type="button" id="bxmore" value="+" onClick="bplus('textx', 1, false)">
+<input name="bxless" type="button" value="-" onClick="bplus('textx', -1, false)">
+<!-- y -->
+
+<span>&nbsp;&nbsp;&nbsp;y&nbsp;</span> 
+<input class="numinput" id="texty" name="texty" type="text" value="90" />
+<input type="button" id="bymore" value="+" onClick="bplus('texty', 1, true)">
+<input name="byless" type="button" value="-" onClick="bplus('texty', -1, true)"> </td>
+</tr>
+ <td> 
+  <table><tr>
+  <td>Font 
+    <select name="family" id="family" onChange="update()">
+      <option>Arial</option>
+	  <option>Century Gothic</option>
+	  <option>Comic Sans MS</option>
+      <option>Courier New</option>	  
+      <option>Georgia</option>	  
+      <option>Impact</option>	  	  
+      <option>Times New Roman</option>
+	  <option>Trebuchet MS</option>
+      <option>Verdana</option>
+      <option>Calibri</option>	  
+      <option>Cambria</option>
+      <option>Consolas</option>	
+      <option>Bookman Old Style</option>	  
+      <option>Bradley Hand ITC</option>
+      <option>Engravers MT</option>	  
+      <option>Eras Light ITC</option>
+      <option>Liberation Sans Narrow</option>	  	  	  	  	    	  	  	  
+      <option>Lucida Handwriting</option>	  	  	  	  	    	  	  	  	  
+      <option>Matisse ITC</option>	  	  	  	  	    	  	  	  	  	 
+      <option>Segoe print</option>	   
+    </select> </td>
+	<td>
+	Bold <input type="checkbox" name="bold" id="bold"  value="checkbox" onChange="update()">	</td>
+	<td>
+	Italic <input type="checkbox" name="italic" id="italic" value="checkbox" onChange="update()">	</td>
+	</tr>
+	</table></td>
+</tr>
+<tr>
+   <td> 
+      <table><tr><td>Font size</td>
+	  <td>
+<div class="carpe_horizontal_slider_track" style="width:105px">
+    <div class="carpe_slider_slit" style="width:100px">&nbsp;</div>
+    <div class="carpe_slider"
+        id="slider_id"
+        orientation="horizontal"
+        distance="100"
+        display="fontsize"
+        style="left:48px;">&nbsp;
+	</div>
+</div>
+<div class="carpe_slider_display_holder" >
+    <input class="carpe_slider_number"
+        id="fontsize" name="fontsize" type="text" typelock="off"
+        from="0" to="100" valuecount="101" value="32"  
+    />
+</div>  px</td></tr>
+      </table>	 </td>
+     </tr>
+ <tr>
+   <td> <p>Shadow <input type="checkbox" id="shadow" value="checkbox" onChange="update()">
+  Offset <input id="offset" type="text" size="2" value="2" onKeyUp="update()">
+  Blur 
+  <input name="blur" id="blureffect" type="text" size="2" value="2" onKeyUp="setblur()">
+      </p></td>
+    </tr>
+    <tr>
+      <td colspan="2">Border 
+        <input type="checkbox" id="bord" value="checkbox" onChange="update()"> 
+        Thickness 
+        <input id="bordsize" type="text" size="2" value="1" onKeyUp="update()">
+        Offset x : 
+        <input id="bordx" type="text" size="2" value="0" onKeyUp="update()"> 
+        y: 
+        <input id="bordy" type="text" size="2" value="0" onKeyUp="update()"></td>
+    </tr>
+	
+    <tr>
+      <td colspan="2"><label>Image 
+          <input type="file" name="backpicture" id="loadpicture" value="">
+        </label><input type="button" value="Display" onClick="backcrop()">
+        <input type="button" value="Resize" onClick="backfill()">
+        <input type="button" name="Submit2" value="Add to textures" onClick="addToTextures()">
+        <input type="button"  value="Remove" onClick="removeBackImage()"></td>
+    </tr>
+    <tr>
+   <td colspan="2">Texture for the text
+        <input type="radio" name="texturefor" value="text" onClick="switchtexture(this)"> 
+        the background 
+        <input type="radio" name="texturefor" value="back"  checked onClick="switchtexture(this)"> 
+   </td>
+</tr>
+
+<tr>
+  <td colspan="2">
+<div id="texgal" style="max-width:800px">
+<span><img id="t1"src="textures/texture-pebbles.jpg" width="64" height="64" onClick="setit(this)"></span>
+<span><img src="textures/texture-wall1.jpg" width="64" height="64" onClick="setit(this)"></span>
+<span><img src="textures/texture-metal.png" width="64" height="64" onClick="setit(this)"></span>
+<span><img src="textures/texture-wood1.jpg" width="64" height="64" onClick="setit(this)"></span>
+<span><img src="textures/texture-wood3.jpg" width="64" height="64" onClick="setit(this)"></span>
+<span><img src="textures/texture-wood4.jpg" width="64" height="64" onClick="setit(this)"></span>
+<span><img src="textures/texture-sky.jpg" width="64" height="64" onClick="setit(this)"></span>
+<span><img src="textures/texture-water.jpg" width="64" height="64" onClick="setit(this)"></span>
+<span><img src="textures/texture-green.jpg" width="64" height="64" onClick="setit(this)"></span>
+<span id="lastext"><img src="textures/texture-bluejean.jpg" width="64" height="64" onClick="setit(this)"></span>
+</div>
+	</td>
+</tr>
+
+
+   <td colspan="2"><input type="button"  value="Add the logo to the gallery" onClick="addToGallery()">
+   </td>
+ </tr>	  
+</table>
+
+</div> <!-- panel -->
+</div> <!-- mainboard -->
+
+<table style="float:none" align="center"><tr><td>
+<div id="gallery"></div>
+</td></tr></table>
+
+<br>
+
+<div id="credit">
+<table style="float:none" align="center"><tr>
+<td><img src="images/logo-firefox.png"></td>
+<td><img src="images/logo-chrome.png"></td>
+<td>Logo Maker - &copy; 2012  <a href="http://www.scriptol.com/" target="_top">Scriptol.com</a>. Mozilla license.</td>
+</tr></table>
+</div>
+</div> <!--content-->
+<div id="pasf">
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-6574971-1");
+pageTracker._trackPageview();
+} catch(err) {}
+</script>
+</div>
+<script type="text/javascript" src="http://apis.google.com/js/plusone.js"></script>
+</body>
+</html>

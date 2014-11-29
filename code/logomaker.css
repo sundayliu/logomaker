@@ -1,0 +1,109 @@
+#content 
+{
+	margin:0 auto;
+	text-align:center;
+}
+#titleband
+{
+	margin:0 0 8px 0;
+	background:#E0E0E0;
+	border-bottom:1px solid #CCC;
+}
+h1
+{
+	text-align:center;
+	font-size:140%;
+	font-family:"Segoe Print", "Verdana", "Arial";
+	margin:0 0 8px 0;
+	font-style:normal;
+	font-weight:normal;
+	text-shadow:3px 3px 4px #888888; 
+}
+.shade
+{
+  box-shadow:3px 3px 6px #888888; 
+  -moz-box-shadow:3px 3px 6px #888888; 
+  -webkit-box-shadow:3px 3px 4px #888888;
+}
+
+#panel
+{
+	padding:0 12px 12px 12px;
+}
+#mainboard
+{
+	margin:0 auto;
+	background-color:#E8E8E8;
+	max-width:800px;
+	padding:0;
+	border:1px solid gray;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;	
+	text-align:left;
+}
+#canvaslogo
+{
+  border:1px solid gray;
+  margin:0 auto;  
+  background-color:white;
+}
+
+#credit
+{
+	margin:4px;
+	padding:0px;
+	text-align:center;
+	width:100%;
+}
+#curtexture
+{
+	background:white;
+	border:1px solid black;
+	padding:2px;
+	width:64px;
+	height:64px;
+}
+#gallery
+{
+	margin:0 auto;
+	margin-top:8px;
+	width:100%;
+	padding:0;
+}
+.galitem
+{
+	margin:4px;
+	border:1px solid black;
+	padding:0px;
+	max-width:800px;
+	width:800px;	
+}
+
+.carpelabel
+{
+	float:left;
+}
+
+.numinput
+{
+	background-color: #ccc;
+	color: black;
+	padding: 2px 3px 2px 2px;
+	width: 30px;
+	text-align: right;
+	font-size: 16px;
+	line-height: 10px;
+	font-family: Calibri, arial, helvetica, sans-serif;
+	font-weight: bold;
+	border:#ccc;
+	cursor: default;	
+}
+
+#texgal span
+{
+}
+#texgal span img
+{
+	border:2px solid white;
+}
