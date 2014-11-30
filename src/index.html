@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>HTML 5 Canvas</title>
+
+<script type="text/javascript">
+    // l 36
+    // m 48  
+    // h 72 
+    // xh 96
+    // xxh 144
+    function initCanvas()
+    {
+      canvas = document.getElementById("canvas1"); 
+      if (canvas.getContext)
+      {    
+        context = canvas.getContext('2d');
+        return true; 
+      }
+     return false;
+    }
+
+    function setCanvas()
+    {
+       if(! initCanvas()) return;
+       context.fillStyle="blue"   
+       context.fillRect(100,0,200,100);     
+    }  
+
+    
+    function drawLine4()
+    {
+      var context = document.getElementById("canvas2").getContext('2d');
+      context.lineWidth='8';
+      context.strokeStyle='green';
+      context.beginPath();
+      context.moveTo(20,20);
+      context.lineTo(200,20);
+      context.stroke();
+      context.beginPath();
+      context.strokeStyle='#800';
+      context.lineCap='square';
+      context.moveTo(20,50);
+      context.lineTo(200,50);
+      context.stroke();
+      context.strokeStyle='rgb(128,0,0)';
+      context.lineCap='round';
+      context.beginPath();
+      context.moveTo(20,80);
+      context.lineTo(200,80);
+      context.stroke();
+    }
+
+    function drawCanvas3()
+    {
+        var canvas = document.getElementById("canvas3");
+        var context = canvas.getContext("2d");
+        context.fillStyle = "#00FF00";
+        context.strokeStyle='#0f0';
+        
+        context.beginPath();
+        context.arc(72,72,30,0,Math.PI*2,true);
+        context.fill();
+        context.closePath();
+
+        context.beginPath();
+        context.arc(72,72,40,0,Math.PI*2,true);
+        context.stroke();
+        context.closePath();
+
+        context.beginPath();
+        context.arc(72,72,50,0,Math.PI*2,true);
+        context.stroke();
+        context.closePath();
+
+
+        
+        
+    }
+
+    function drawClock()
+    {
+        var canvas = document.getElementById("canvas4");
+        var context = canvas.getContext("2d");
+        
+        context.save();
+        //context.strokeRect(5,5,canvas.width-10,canvas.height-10);
+        //context.fillStyle = "#EEEEFF";
+        //context.fillRect(0, 0, 144, 144);
+
+        context.beginPath();
+        context.strokeStyle = "#00f";
+        context.fillStyle = "#00f";
+        context.arc(72,72,5,0,2*Math.PI,true);
+        context.fill();
+        context.closePath();
+
+        context.beginPath();
+        context.strokeStyle = "#00f";
+        context.arc(72,72,60,0,2*Math.PI,true);
+        context.stroke();
+        context.closePath();
+
+        context.beginPath();
+        context.translate(72,72); // 平移 72,72
+        context.rotate(-Math.PI/2); // 逆时针旋转90
+        //context.save();
+        for(var i = 0; i < 60; i++)
+        {
+            // r = 60
+            if (i % 5 == 0)
+            {
+                context.fillRect(50,0,10,2.5);
+                context.fillText(""+(i/5==0?12:i/5),40,0);
+            }
+            else
+            {
+                context.fillRect(55,0,5,1.5);
+            }
+            context.rotate(Math.PI/30);
+        }
+
+        //context.restore();
+        context.closePath();
+
+        context.restore();
+    }
+
+    var ls = 0;
+    var lm = 0;
+    var lh = 0;
+    var slen = 35;
+    var mlen = 30;
+    var hlen = 25;
+    function refreshClock()
+    {
+
+        var canvas = document.getElementById("canvas4");
+        var context = canvas.getContext("2d");
+        context.save();
+
+        context.save();
+        context.translate(72,72); // 平移 72,72
+        context.rotate(-Math.PI/2); // 逆时针旋转90
+
+        context.save();
+        context.rotate(ls*Math.PI/30);
+        context.clearRect(5,-1,slen+2,1+2)
+        context.restore();
+
+        context.save();
+        context.rotate(lm*Math.PI/30);
+        context.clearRect(5,-1,mlen+2,2+2)
+        context.restore();
+
+        context.save();
+        context.rotate(lh*Math.PI/6);
+        context.clearRect(5,-1,hlen+2,3+2);
+        context.restore();
+
+
+
+        context.restore();
+
+        context.strokeStyle = "#00f";
+        context.fillStyle = "#00f";
+
+        var time = new Date();
+        var s = ls = time.getSeconds();
+        var m = lm = time.getMinutes();
+        var h = lh = time.getHours();
+
+        context.beginPath();
+        //context.fillStyle = "#070";
+        context.font = "italic 20px serif";
+        context.fillText("TT",120,144);
+        context.translate(72,72); // 平移 72,72
+        context.rotate(-Math.PI/2); // 逆时针旋转90
+
+        context.save();
+        context.rotate(s*Math.PI/30)
+        context.fillRect(5,0,slen,1);
+        context.restore();
+
+        context.save();
+        context.rotate(m*Math.PI/30)
+        context.fillRect(5,0,mlen,2);
+        context.restore();
+
+        context.save();
+        context.rotate(h*Math.PI/6)
+        context.fillRect(5,0,hlen,3);
+        context.restore();
+
+        context.closePath();
+        context.restore();
+
+    }
+
+    function drawCanvas5() {
+            var canvas = document.getElementById("canvas5");
+            if (canvas == null)
+                return false;
+            var context = canvas.getContext("2d");
+            context.fillStyle = "#EEEEFF";
+            context.fillRect(0, 0, 144, 144);
+            var n = 0;
+            var dx = 72;
+            var dy = 72;
+            var s = 60;
+            context.beginPath();
+            context.fillStyle = 'rgb(100,255,100)';
+            context.strokeStyle = 'rgb(0,0,100)';
+            var x = Math.sin(0);
+            var y = Math.cos(0);
+            var dig = Math.PI / 15 * 11;
+            for (var i = 0; i < 30; i++) {
+                var x = Math.sin(i * dig);
+                var y = Math.cos(i * dig);
+                context.lineTo(dx + x * s, dy + y * s);
+            }
+            context.closePath();
+            context.fill();
+            context.stroke();
+
+    }
+
+    function drawRose()
+    {
+        // r = a + bsin(m/n*x)
+        var canvas = document.getElementById("canvas6");
+        var context = canvas.getContext("2d");
+        context.save();
+        context.translate(72,72); 
+        context.strokeStyle = "#cc0000"; 
+
+        var a = 1;
+        var b = 5;
+        var m = 29;
+        var n = 11;
+        context.beginPath(); 
+        var e = 0, c = 50; 
+        var k = 2 * Math.PI / 360;
+        do { 
+        var r = a/b + Math.sin( m * e / n * k);
+        r = r * c; 
+        var x = r * Math.cos( e * k );
+        var y = r * Math.sin( e * k );
+        e += 0.1; 
+        context.lineTo(x,y); 
+        } while ( e <= 4320 );
+        context.closePath(); 
+        context.stroke(); 
+
+        context.restore();
+    }
+
+    function drawCanvas7()
+    {
+        canvas = document.getElementById("canvas7");
+        ctx = canvas.getContext("2d");
+        ctx.translate(72,72); 
+
+        ctx.strokeStyle = "#cc0000"; 
+        ctx.beginPath(); //ctx.moveTo(0,0);
+        var e = 0, c = 10; 
+        var k = 2 * Math.PI / 360;
+        do { 
+            x = c*Math.cos( 5/2 * e*k ) + 50*Math.cos( 15/16 * 5/2 * e*k ); 
+            y = c*Math.sin( 5/2 * e*k ) - 50*Math.sin( 15/16 * 5/2 * e*k ); 
+            e += 0.1; 
+            ctx.lineTo(x,y); 
+        } while ( e <= 3600 ); 
+        ctx.stroke(); 
+    }
+
+    function drawCanvas8()
+    {
+        canvas = document.getElementById("canvas8");
+        ctx = canvas.getContext("2d");
+
+        ctx.save();
+        ctx.fillStyle = "#EEEEFF";
+        ctx.fillRect(0, 0, 144, 144);
+        ctx.translate(72,90); 
+
+        ctx.strokeStyle = "#00c"; 
+        ctx.beginPath(); //ctx.moveTo(0,0);
+        var e = 0, c = 10; 
+        var k = 2 * Math.PI / 360;
+        do { 
+            var t = e * k;
+            var cost = Math.cos(t);
+            var sint = Math.sin(t);
+            //var equ = Math.exp(cost) - 2*Math.cos(4*t) - Math.pow(Math.sin(t/12),5);
+            var equ = Math.exp(sint) - 2 * Math.cos(4 * t) - Math.pow(Math.sin(-Math.PI / 24 + t / 12.0), 5);
+            x = 18 * cost * equ;
+            y = -18 * sint * equ;
+            
+            e += 0.1; 
+            ctx.lineTo(x,y); 
+        } while ( e <= 7200 ); 
+        ctx.closePath();
+        ctx.stroke(); 
+
+        ctx.restore();
+        //ctx.translate(0,0); 
+        // ctx.strokeStyle = "#ff0000";
+        // ctx.beginPath();
+        // ctx.moveTo(72,2);
+        // ctx.lineTo(72,142);
+        // ctx.moveTo(2,72);
+        // ctx.lineTo(142,72);
+        // ctx.stroke();
+    }
+
+        function drawCanvas9()
+    {
+        canvas = document.getElementById("canvas9");
+        context = canvas.getContext("2d");
+    }
+
+        function drawCanvas10()
+    {
+        canvas = document.getElementById("canvas10");
+        context = canvas.getContext("2d");
+    }
+
+        function drawCanvas11()
+    {
+        canvas = document.getElementById("canvas11");
+        context = canvas.getContext("2d");
+    }
+
+
+    function refresh()
+    {
+        refreshClock();
+    }
+    //window.onload=setCanvas();
+    function draw()
+    {
+      setCanvas();
+      drawLine4();
+      drawCanvas3();
+      drawClock();
+      drawCanvas5();
+      drawRose();
+      drawCanvas7();
+      drawCanvas8();
+      drawCanvas9();
+      drawCanvas10();
+      drawCanvas11();
+      refresh();
+    }
+
+</script>
+
+</head>
+
+<body onload="draw()">
+<canvas id="canvas1" width="144" height="144" style="border:1px solid blue;"></canvas>
+<canvas id="canvas2" width="144" height="144" style="border:1px solid blue;"></canvas>
+<canvas id="canvas3" width="144" height="144" style="border:1px solid blue;"></canvas>
+<canvas id="canvas4" width="144" height="144" style="border:1px solid blue;"></canvas>
+<canvas id="canvas5" width="144" height="144" style="border:1px solid blue;"></canvas>
+<canvas id="canvas6" width="144" height="144" style="border:1px solid blue;"></canvas>
+<br />
+<canvas id="canvas7" width="144" height="144" style="border:1px solid blue;"></canvas>
+<canvas id="canvas8" width="144" height="144" style="border:1px solid blue;"></canvas>
+<canvas id="canvas9" width="144" height="144" style="border:1px solid blue;"></canvas>
+<canvas id="canvas10" width="144" height="144" style="border:1px solid blue;"></canvas>
+<canvas id="canvas11" width="144" height="144" style="border:1px solid blue;"></canvas>
+<canvas id="canvas12" width="144" height="144" style="border:1px solid blue;"></canvas>
+<script type="text/javascript">
+    setInterval("refresh();",1000);
+</script>
+</body>
+</html>

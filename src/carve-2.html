@@ -1,0 +1,70 @@
+<!DOCTYPE html>   
+<meta charset="UTF-8">  
+<title>使用canvas元素绘制美丽的花朵</title>  
+<script type="text/javascript">
+var context;
+var A,n;
+function btn_onclick()
+{    
+    var width;
+    var Height;
+    var canvas;
+    var Xo,Yo;
+    var k;
+    canvas=document.getElementById("canvas");
+    width=canvas.width;
+    height=canvas.height;
+    context=canvas.getContext('2d');    
+    Xo=width/2;
+    Yo=height/2;
+    k=parseInt(document.getElementById("drawType").value);
+    if(k==2)
+        A=Yo*0.25;
+    else
+        A=Yo*0.75;
+    context.save();//保存当前绘制状态
+    context.clearRect(0,0,width,height);//擦除之前绘制的图形
+    context.translate(Xo,Yo);//坐标原点移动到canvas元素中央
+    context.beginPath();//开始创建路径
+    for(var B=0;B<=6.28;B=B+0.01)
+    { 
+         draw(B);//绘制花朵曲线
+    }
+    context.closePath();//关闭路径
+    context.restore();//恢复坐标轴平移之前的绘制状态
+}
+function draw(B)
+{
+    var n=10;
+    switch(parseInt(document.getElementById("drawType").value))
+    {
+         case 3://大丽花
+             r=A*Math.sin(n*B)*Math.exp(-B/(20));
+             break;
+         case 2://令箭荷花
+             r=A*(Math.sin(n*B)+3*Math.sin(3*n*B));
+             break;
+         case 1://蓬莱菊
+             r=A*Math.sin(n*B);
+    }
+
+   //极坐标的直角坐标
+   x=r*Math.cos(B);
+   y=r*Math.sin(B);
+
+   context.fillStyle="green";//设置填充颜色
+   context.strokeStyle="black";//设置边框颜色
+   context.lineTo(-x,-y);//绘制直线
+   context.fill();//填充图形
+   context.stroke();//绘制边框
+}
+</script> 
+<h1>使用canvas元素绘制美丽的花朵</h1>  
+花的类型：
+<select id="drawType">
+    <option value="1">蓬莱菊</option>
+    <option value="2">令箭荷花</option>
+    <option value="3">大丽花</option>
+</select>
+<input type="button" id="btn" value="绘制" onclick="btn_onclick()"/><br/>
+<canvas id="canvas" width="200px" height="200px"></canvas>

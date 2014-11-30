@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+<script type="text/javascript">
+function draw(){
+
+var json = eval('[{"ymdh":"2014082117","nums":0},{"ymdh":"2014082118","nums":0},{"ymdh":"2014082119","nums":0},{"ymdh":"2014082120","nums":0},{"ymdh":"2014082121","nums":0},{"ymdh":"2014082122","nums":0},{"ymdh":"2014082123","nums":0},{"ymdh":"201408220","nums":0},{"ymdh":"2014082201","nums":0},{"ymdh":"2014082202","nums":0},{"ymdh":"2014082203","nums":0},{"ymdh":"2014082204","nums":0},{"ymdh":"2014082205","nums":0},{"ymdh":"2014082206","nums":0},{"ymdh":"2014082207","nums":0},{"ymdh":"2014082208","nums":0},{"ymdh":"2014082209","nums":0},{"ymdh":"2014082210","nums":0},{"ymdh":"2014082211","ctid":"1","nums":"20847"},{"ymdh":"2014082212","ctid":"1","nums":"49562"},{"ymdh":"2014082213","ctid":"1","nums":"60162"},{"ymdh":"2014082214","ctid":"1","nums":"56773"},{"ymdh":"2014082215","ctid":"1","nums":"50794"},{"ymdh":"2014082216","ctid":"1","nums":"33214"}]');
+//var json = eval();
+var jsonLength = json.length;
+this.canvas = document.getElementById('canvas');
+//alert(this.canvas.offsetWidth);
+this.canvas.width = this.canvas.offsetWidth;
+this.canvas.height = this.canvas.offsetHeight;
+var context = this.canvas.getContext("2d");
+
+var width = this.canvas.width;
+var height = this.canvas.height;
+//左80 上10 右10 下20
+var padLeft = 50;
+var padTop = 10;
+var padRight = 20;
+var padBottom = 20;
+var widthData = width – padLeft – padRight;
+var heightData = height – padTop – padBottom;
+var widthOne = Math.floor(widthData / 23);
+var heightOne = Math.floor(heightData / 10);
+
+//绘制纵坐标轴
+context.beginPath();
+context.strokeStyle = "#4770a7";
+context.moveTo(padLeft, padTop);
+context.lineTo(padLeft, height – padTop – padBottom);
+context.stroke();
+context.closePath();
+//绘制横坐标轴
+context.beginPath();
+context.strokeStyle = "#48bef4";
+context.moveTo(padLeft, height – padTop – padBottom);
+context.lineTo(width – padRight, height – padTop – padBottom);
+context.stroke();
+context.closePath();
+
+context.strokeStyle = "#999999";
+//绘制横坐标轴值
+context.font="20px";
+var date = new Date();
+date.setTime(parseInt(time) * 1000);
+var hour = date.getHours();
+var i = 0;
+for(i = 0; i <= 23; i++){
+hour++;
+if(hour > 23) hour = 0;
+context.strokeText(hour, widthOne * i + padLeft, height – padBottom);
+
+}
+//绘制纵坐标值
+var maxNums = 0;
+for(i = 0; i < jsonLength; i++){
+json[i].nums = parseFloat(json[i].nums);
+if(json[i].nums > maxNums)
+maxNums = json[i].nums;
+}
+alert(maxNums);
+var step = Math.ceil(maxNums / 10);
+for(i = 0; i < 10; i++){
+context.strokeText(step * (10 – i), 10, padTop + heightOne * i + 10);
+}
+
+//模拟折线图绘制
+context.fillStyle="#fad4cc";
+context.beginPath();
+var tempPer = 0;
+var heightY = 0;
+for(var n = 0;n<24;n++){
+if(json[n].nums == 0 && json[n + 1].nums == 0)
+continue;
+
+tempPer = num_format(json[n].nums / maxNums, 2);
+heightY = Math.floor(tempPer * heightData);
+
+var y = height – padBottom – padTop – heightY -1;
+var x = widthOne * n + padLeft;
+context.fillRect(x,y,6,6);
+context.lineTo(x,y+2);
+}
+context.strokeStyle="#fad4cc";
+context.stroke();
+context.closePath();
+
+}
+</script>
+</head>
+
+<body onload="draw()">
+    <div id="chart">
+        <div id="chart_body">
+            <canvas id="canvas" height="205" style="border:1px solid blue;">
+            对不起，你所用的浏览器不支持canvas，请更换浏览器
+            </canvas>
+        </div>
+    </div>
+</body>
+</html>

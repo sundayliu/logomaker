@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>  
+<meta charset="utf-8">
+    <title>learn canvas 001</title>  
+    <!--[if IE]><script type="text/javascript" src="excanvas.js"></script><![endif]-->  
+    <script type="text/javascript">  
+        var MAX_WIDTH = 640;  
+        var MAX_HEIGHT = 480;  
+          
+        function init() {  
+            var g = getCanvasContext();  
+            g.translate(MAX_WIDTH/2, MAX_HEIGHT/2);  
+              
+            initGraph();  
+        }  
+          
+        function initGraph() {  
+            var g = getCanvasContext();  
+            g.strokeStyle = 'black';  
+            if (g) {  
+                g.clearRect(-MAX_WIDTH/2, -240, MAX_WIDTH, MAX_HEIGHT);  
+                g.strokeRect(-MAX_WIDTH/2, -240, MAX_WIDTH, MAX_HEIGHT);  
+  
+                g.beginPath();  
+                g.moveTo(-MAX_WIDTH/2, 0);  
+                g.lineTo(MAX_WIDTH/2, 0);  
+                g.moveTo(0, -MAX_HEIGHT/2);  
+                g.lineTo(0, MAX_HEIGHT/2);  
+                g.stroke();  
+            }  
+        }  
+          
+        function draw() {  
+            initGraph();  
+              
+            var maxX = Number(document.getElementById('maxX').value);  
+            var maxY = Number(document.getElementById('maxY').value);  
+            var halfStep = Number(document.getElementById('halfStep').value);  
+              
+            var g = getCanvasContext();  
+            if (g) {  
+                var x, y;  
+                var sx, sy;  
+                var currStep;  
+                  
+                sx = -MAX_WIDTH/2  
+                sy = -MAX_HEIGHT/2 * calculateY(-maxX) / maxY;  
+                g.beginPath();  
+                g.moveTo(sx, sy);  
+                  
+                for (currStep=-halfStep + 1; currStep<=halfStep; currStep++) {  
+                    x = maxX * currStep / halfStep;  
+                    y = calculateY(x);  
+                    sx = MAX_WIDTH/2 * x / maxX;  
+                    sy = -MAX_HEIGHT/2 * y / maxY;  
+                    g.lineTo(sx, sy);  
+                }  
+                g.strokeStyle = 'blue';  
+                g.stroke();  
+            }  
+        }  
+          
+        function calculateY(x) {  
+            var a = Number(document.getElementById('a').value);  
+            var b = Number(document.getElementById('b').value);  
+            var c = Number(document.getElementById('c').value);  
+              
+            var y = a * x * x + b * x + c;  
+            return y;  
+        }  
+          
+        function getCanvasContext() {  
+            var c = document.getElementById('myCanvas');  
+            if(c && c.getContext) {  
+                var g = c.getContext('2d');  
+                return g;  
+            } else {  
+                return null;  
+            }  
+        }  
+    </script>  
+</head>  
+  
+<body onload="init()">  
+    <canvas id="myCanvas" width="640" height="480">  
+        该浏览器不支持Canvas.  
+    </canvas>  
+    <p>  
+    <table>  
+        <tr>  
+            <td colspan="2">  
+                函数 = <input type="text" id="a" size="2" value="1"/> * x * x + <input type="text" size="2" id="b" value="2"/> * x + <input type="text" size="2" id="c" value="3"/>  
+            </td>  
+        </tr>  
+        <tr>  
+            <td>最大横坐标:</td>  
+            <td><input type="text" id="maxX" value="10"/></td>  
+        </tr>  
+        <tr>  
+            <td>最大纵坐标:</td>  
+            <td><input type="text" id="maxY" value="200"/></td>  
+        </tr>  
+        <tr>  
+            <td>二分之一总步数:</td>  
+            <td><input type="text" id="halfStep" value="20"/></td>  
+        </tr>  
+        <tr>  
+            <td colspan="2"><button name="btnDraw" type="button" onClick="draw()">Draw</button></td>  
+        </tr>  
+    </table>  
+      
+</body>  
+  
+</html>  

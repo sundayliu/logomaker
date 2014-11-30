@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+ <html>
+  <head lang="en">
+   <meta charset="UTF-8">
+   <title></title>
+  </head>
+ <body>
+  <!--<noscript>r = a(1-sin"theta")</noscript>-->
+  <canvas id="cardioid" width="600" height="600" style="background: lightblue">
+     您的浏览器不支持canvas！
+   </canvas>
+ <script>
+var cr = document.getElementById("cardioid");
+    var W = cr.width/2, H = cr.height/3, R = 150;
+    var c = cr.getContext("2d");
+    var G = 360, g = 0, T = Math.PI*2, t = T/G;
+    c.save();
+    c.translate(W, H);
+    c.rotate(-T/4);
+    //c.fillStyle = "red";
+    while(g < G){
+        c.save();//c.translate(W, H);
+        c.rotate(g*t);
+        c.beginPath();
+        c.arc(0, -R*(1-Math.sin(++g*t)), 13, 0, 360, false);
+        c.closePath();
+        c.fill();
+        c.restore();
+    }
+    c.restore();
+    g = 0;
+    (function draw(){
+        if(g < G){
+            c.save();
+            c.translate(W, H);
+            c.rotate(-T/4 + g*t);
+            c.fillStyle = "yellow";
+            c.beginPath();
+            c.arc(0, -R*(1-Math.sin(++g*t)), 5, 0, 360, false);
+            c.closePath();
+            c.fill();
+            c.restore();
+        }
+        setTimeout(draw, 1);
+    })();
+</script>
+</body>
+</html>

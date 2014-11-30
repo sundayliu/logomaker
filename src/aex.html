@@ -1,0 +1,49 @@
+<html>
+    <head>
+    <script type="text/javascript">
+  window.onload = function(){
+    var canvas = document.getElementById("myCanvas");
+    var context = canvas.getContext("2d");
+    //横线与竖线的间隔距离
+    var dx = 30;
+    var dy = 30;
+    //初始坐标点
+    var x=0;
+    var y=0;
+    var w=canvas.width;
+    var h=canvas.height;
+    //单个步长所表示的长度
+    var xy=10;
+   //画横线
+   while(y<h){
+    y=y+dy;
+    context.moveTo(x, y);
+    context.lineTo(w,y);
+    context.stroke();   
+    //横坐标的数字
+    context.font = "1pt Calibri";
+    context.fillText(xy, x, y);
+    xy+=10;
+   }
+   //画竖线
+   y=0;
+   xy=10;
+   while(x<w){
+     x=x+dx;
+     context.moveTo(x, y);
+     context.lineTo(x,h);
+     context.stroke(); 
+     //纵坐标的数字
+     context.font = "1pt Calibri";
+     context.fillText(xy,x,10);  
+     xy+=10;
+   }      
+ 
+ };
+ </script>
+    </head>
+    <body>
+        <canvas id="myCanvas" width="1200" height="1200">
+        </canvas>
+    </body>
+</html
