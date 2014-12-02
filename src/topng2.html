@@ -25,11 +25,12 @@
         canvas = document.getElementById("canvas8");
         ctx = canvas.getContext("2d");
         ctx.save();
-        ctx.fillStyle = "#f00";
+        //ctx.fillStyle = "#0f0";
         //ctx.fillRect(0, 0, 144, 144);
-        ctx.font = "italic 14px serif";
-        ctx.fillText("Butterfly",95,141);
-        ctx.translate(72,90); 
+        //ctx.font = "italic 14px serif";
+        //ctx.fillStyle = "#f00";
+        //ctx.fillText("Butterfly",45,131);
+        ctx.translate(72,80); 
         ctx.strokeStyle = "#f00"; 
         ctx.beginPath(); //ctx.moveTo(0,0);
         var e = 0, c = 10; 
@@ -40,8 +41,8 @@
             var sint = Math.sin(t);
             //var equ = Math.exp(cost) - 2*Math.cos(4*t) - Math.pow(Math.sin(t/12),5);
             var equ = Math.exp(sint) - 2 * Math.cos(4 * t) - Math.pow(Math.sin(-Math.PI / 24 + t / 12.0), 5);
-            x = 18 * cost * equ;
-            y = -18 * sint * equ;
+            x = 14.4 * cost * equ;
+            y = -14.4 * sint * equ;
             
             e += 0.1; 
             ctx.lineTo(x,y); 
