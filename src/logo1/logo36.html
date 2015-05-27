@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>logo generator</title>
+<meta name="Keywords" content="">
+<meta name="Description" content="">
+<style type="text/css">
+    body, h1{margin:0;}
+    canvas{margin: 20px; }
+</style>
+<script type="text/javascript">
+    function addToGallery(){
+        var canvas = document.getElementById("canvas");
+        var dataURL = canvas.toDataURL("image/png");
+        var button = document.getElementById("btn-download");
+        button.href = dataURL;
+        //var imageElement = new Image();  // Get the img object.
+        //imageElement.src = dataURL; 
+        //var img = document.getElementById("logo");
+        //img.src = imageElement;
+    }
+        function drawCanvas(diameter)
+    {
+        var canvas = document.getElementById("canvas");
+        var context = canvas.getContext("2d");
+
+        //context.save();
+        context.fillStyle = "#555";
+        context.fillRect(0, 0, diameter, diameter);
+
+        //context.fillStyle = "#00FF00";
+        //context.strokeStyle='#0f0';
+
+        var x = diameter/2
+        var y = diameter/2
+        var r = diameter/2 - 2
+
+        context.beginPath();
+        context.moveTo(x,y)
+        context.arc(x,y,r,0,Math.PI*2,true);
+        
+        context.closePath();
+        context.fillStyle = '#bbb'
+        context.fill();
+        
+        r = diameter/2 - 6
+        context.beginPath();
+        context.moveTo(x,y)
+        context.arc(x,y,r,0,Math.PI*2,true);
+        
+        context.closePath();
+        context.fillStyle = '#ddd'
+        context.fill();
+
+        r = diameter/2 - 10
+        context.beginPath();
+        context.moveTo(x,y)
+        context.arc(x,y,r,0,Math.PI*2,true);
+        
+        context.closePath();
+        context.fillStyle = '#fff'
+        context.fill();
+
+
+
+        // context.beginPath();
+        // context.arc(18,18,12,0,Math.PI*2,true);
+        // context.stroke();
+        // context.closePath();
+
+        // context.beginPath();
+        // context.arc(18,18,15,0,Math.PI*2,true);
+        // context.stroke();
+        // context.closePath();
+    }
+</script>
+</head>
+<body onload="draw()">
+    <canvas id="canvas" width="36" height="36" style="border:1px solid blue;"></canvas>
+    <br />
+    <input type="button"  value="ToPNG" onClick="addToGallery()"><br />
+    <a href="" class="button" id="btn-download" download="logo.png">Download</a><br />
+    
+    <!-- <img src="" id="logo" /> -->
+
+    <script>
+    function draw() {
+        
+       drawCanvas(36); 
+    }
+    </script>
+</body>
+</html>
