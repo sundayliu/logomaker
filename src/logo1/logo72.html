@@ -31,10 +31,10 @@
 
         //context.fillStyle = "#00FF00";
         //context.strokeStyle='#0f0';
-
+        var delta = diameter/9
         var x = diameter/2
         var y = diameter/2
-        var r = diameter/2 - 2
+        var r = diameter/2 - (delta * 1)
 
         context.beginPath();
         context.moveTo(x,y)
@@ -44,7 +44,7 @@
         context.fillStyle = '#bbb'
         context.fill();
         
-        r = diameter/2 - 6
+        r = diameter/2 - (delta * 2)
         context.beginPath();
         context.moveTo(x,y)
         context.arc(x,y,r,0,Math.PI*2,true);
@@ -53,7 +53,7 @@
         context.fillStyle = '#ddd'
         context.fill();
 
-        r = diameter/2 - 10
+        r = diameter/2 - (delta * 3)
         context.beginPath();
         context.moveTo(x,y)
         context.arc(x,y,r,0,Math.PI*2,true);
