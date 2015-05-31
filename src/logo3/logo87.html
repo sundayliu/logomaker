@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>logo generator</title>
+<meta name="Keywords" content="">
+<meta name="Description" content="">
+<style type="text/css">
+    body, h1{margin:0;}
+    canvas{margin: 20px; }
+</style>
+<script type="text/javascript">
+    function addToGallery(){
+        var canvas = document.getElementById("canvas");
+        var dataURL = canvas.toDataURL("image/png");
+        var button = document.getElementById("btn-download");
+        button.href = dataURL;
+        //var imageElement = new Image();  // Get the img object.
+        //imageElement.src = dataURL; 
+        //var img = document.getElementById("logo");
+        //img.src = imageElement;
+    }
+        function drawCanvas(diameter)
+    {
+        canvas = document.getElementById("canvas");
+        ctx = canvas.getContext("2d");
+
+        ctx.save();
+        ctx.fillStyle = "#555";
+        ctx.fillRect(0, 0, diameter, diameter);
+        var x = diameter / 2;
+        var y = diameter * 90 / 144;
+        var times = diameter / 36;
+        ctx.translate(x,y); 
+
+        ctx.strokeStyle = "#fff"; 
+        ctx.beginPath(); //ctx.moveTo(0,0);
+        var e = 0, c = 10/4*times; 
+        var d = 18 / 4 * times;
+        var k = 2 * Math.PI / 360;
+        do { 
+            var t = e * k;
+            var cost = Math.cos(t);
+            var sint = Math.sin(t);
+            //var equ = Math.exp(cost) - 2*Math.cos(4*t) - Math.pow(Math.sin(t/12),5);
+            var equ = Math.exp(sint) - 2 * Math.cos(4 * t) - Math.pow(Math.sin(-Math.PI / 24 + t / 12.0), 5);
+            x = d * cost * equ;
+            y = -d * sint * equ;
+            
+            e += 0.1; 
+            ctx.lineTo(x,y); 
+        } while ( e <= 7200 ); 
+        ctx.closePath();
+        ctx.stroke(); 
+
+        ctx.restore();
+    }
+</script>
+</head>
+<body onload="draw()">
+    <canvas id="canvas" width="87" height="87" style="border:1px solid blue;"></canvas>
+    <br />
+    <input type="button"  value="ToPNG" onClick="addToGallery()"><br />
+    <a href="" class="button" id="btn-download" download="logo.png">Download</a><br />
+    
+    <!-- <img src="" id="logo" /> -->
+
+    <script>
+    function draw() {
+        
+       drawCanvas(87); 
+    }
+    </script>
+</body>
+</html>
